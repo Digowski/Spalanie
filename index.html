@@ -88,7 +88,7 @@
             <label>Cena benzyny za litr (opcjonalnie):</label>
             <input type="text" inputmode="decimal" pattern="[0-9.,]*" id="cenaBenzyna" placeholder="Wpisz cenę">
         </div>
-        <button>Oblicz</button>
+        <button onclick="oblicz()">Oblicz</button>
 
         <div class="result" id="wyniki"></div>
     </div>
@@ -106,15 +106,15 @@
             if (dystans > 0) {
                 if (gaz > 0) {
                     let spalanieGaz = (gaz / dystans) * 100;
-                    wynik += Średnie zużycie gazu: ${spalanieGaz.toFixed(2)} l/100 km<br>;
+                    wynik += Średnie zużycie gazu: ${spalanieGaz.toFixed(2)} l/100 km\n;
                 }
                 if (benzyna > 0) {
                     let spalanieBenzyna = (benzyna / dystans) * 100;
-                    wynik += Średnie zużycie benzyny: ${spalanieBenzyna.toFixed(2)} l/100 km<br>;
+                    wynik += Średnie zużycie benzyny: ${spalanieBenzyna.toFixed(2)} l/100 km\n;
                 }
                 if (gaz > 0 || benzyna > 0) {
                     let spalanieCalkowite = ((gaz + benzyna) / dystans) * 100;
-                    wynik += Łączne zużycie paliwa: ${spalanieCalkowite.toFixed(2)} l/100 km<br>;
+                    wynik += Łączne zużycie paliwa: ${spalanieCalkowite.toFixed(2)} l/100 km\n;
                 }
                 if (cenaGaz > 0 || cenaBenzyna > 0) {
                     let koszt100km = ((gaz * cenaGaz) + (benzyna * cenaBenzyna)) / dystans * 100;
@@ -124,11 +124,10 @@
                 wynik = "Podaj poprawny dystans!";
             }
             
-            document.getElementById("wyniki").innerHTML = wynik;
+            document.getElementById("wyniki").textContent = wynik;
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            document.querySelector("button").addEventListener("click", oblicz);
             let inputs = document.querySelectorAll("input");
             inputs.forEach(input => {
                 input.addEventListener("keypress", function(event) {
