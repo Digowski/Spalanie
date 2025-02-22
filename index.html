@@ -36,7 +36,7 @@
         }
         input {
             width: 35%;
-            height: 52px;
+            height: 44px;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -70,25 +70,25 @@
     <div class="container">
         <div class="input-group">
             <label>Przejechany dystans:</label>
-            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="dystans" placeholder="0,00">
+            <input type="text" inputmode="decimal" pattern="[0-9.,]*" id="dystans" placeholder="Wpisz km">
         </div>
         <div class="input-group">
             <label>Ilość zużytego gazu:</label>
-            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="gaz" placeholder="0,00">
+            <input type="text" inputmode="decimal" pattern="[0-9.,]*" id="gaz" placeholder="Wpisz litry">
         </div>
         <div class="input-group">
             <label>Ilość zużytej benzyny:</label>
-            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="benzyna" placeholder="0,00">
+            <input type="text" inputmode="decimal" pattern="[0-9.,]*" id="benzyna" placeholder="Wpisz litry">
         </div>
         <div class="input-group">
             <label>Cena gazu za litr (opcjonalnie):</label>
-            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="cenaGaz" placeholder="0,00">
+            <input type="text" inputmode="decimal" pattern="[0-9.,]*" id="cenaGaz" placeholder="Wpisz cenę">
         </div>
         <div class="input-group">
             <label>Cena benzyny za litr (opcjonalnie):</label>
-            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="cenaBenzyna" placeholder="0,00">
+            <input type="text" inputmode="decimal" pattern="[0-9.,]*" id="cenaBenzyna" placeholder="Wpisz cenę">
         </div>
-        <button onclick="oblicz()">Oblicz</button>
+        <button>Oblicz</button>
 
         <div class="result" id="wyniki"></div>
     </div>
@@ -128,6 +128,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector("button").addEventListener("click", oblicz);
             let inputs = document.querySelectorAll("input");
             inputs.forEach(input => {
                 input.addEventListener("keypress", function(event) {
