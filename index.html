@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator zużycia paliwa</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #4A90E2, #A0D3F9);
+            color: #333;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+        }
+        h2 {
+            color: #222;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        label {
+            width: 60%;
+            text-align: left;
+        }
+        input {
+            width: 35%;
+            height: 52px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        button {
+            width: 50%;
+            padding: 10px;
+            background: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #357ABD;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 10px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Kalkulator zużycia paliwa</h2>
+
+    <div class="container">
+        <div class="input-group">
+            <label>Przejechany dystans:</label>
+            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="dystans" placeholder="0,00">
+        </div>
+        <div class="input-group">
+            <label>Ilość zużytego gazu:</label>
+            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="gaz" placeholder="0,00">
+        </div>
+        <div class="input-group">
+            <label>Ilość zużytej benzyny:</label>
+            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="benzyna" placeholder="0,00">
+        </div>
+        <div class="input-group">
+            <label>Cena gazu za litr (opcjonalnie):</label>
+            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="cenaGaz" placeholder="0,00">
+        </div>
+        <div class="input-group">
+            <label>Cena benzyny za litr (opcjonalnie):</label>
+            <input type="number" inputmode="decimal" pattern="[0-9.,]*" id="cenaBenzyna" placeholder="0,00">
+        </div>
+        <button onclick="oblicz()">Oblicz</button>
+
+        <div class="result" id="wyniki"></div>
+    </div>
+
+    <script>
+        function oblicz() {
+            let dystans = parseFloat(document.getElementById("dystans").value.replace(',', '.')) || 0;
+            let gaz = parseFloat(document.getElementById("gaz").value.replace(',', '.')) || 0;
+            let benzyna = parseFloat(document.getElementById("benzyna").value.replace(',', '.')) || 0;
+            let cenaGaz = parseFloat(document.getElementById("cenaGaz").value.replace(',', '.')) || 0;
+            let cenaBenzyna = parseFloat(document.getElementById("cenaBenzyna").value.replace(',', '.')) || 0;
+            
+            let wynik = "";
+            
+            if (dystans > 0) {
+                if (gaz > 0) {
+                    let spalanieGaz = (gaz / dystans) * 100;
+                    wynik += Średnie zużycie gazu: ${spalanieGaz.toFixed(2)} l/100 km<br>;
+                }
+                if (benzyna > 0) {
+                    let spalanieBenzyna = (benzyna / dystans) * 100;
+                    wynik += Średnie zużycie benzyny: ${spalanieBenzyna.toFixed(2)} l/100 km<br>;
+                }
+                if (gaz > 0 || benzyna > 0) {
+                    let spalanieCalkowite = ((gaz + benzyna) / dystans) * 100;
+                    wynik += Łączne zużycie paliwa: ${spalanieCalkowite.toFixed(2)} l/100 km<br>;
+                }
+                if (cenaGaz > 0 || cenaBenzyna > 0) {
+                    let koszt100km = ((gaz * cenaGaz) + (benzyna * cenaBenzyna)) / dystans * 100;
+                    wynik += Koszt przejechania 100 km: ${koszt100km.toFixed(2)} zł;
+                }
+            } else {
+                wynik = "Podaj poprawny dystans!";
+            }
+            
+            document.getElementById("wyniki").innerHTML = wynik;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let inputs = document.querySelectorAll("input");
+            inputs.forEach(input => {
+                input.addEventListener("keypress", function(event) {
+                    if (event.key === "Enter") {
+                        oblicz();
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
